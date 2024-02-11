@@ -1,0 +1,44 @@
+class button1 implements ActionListener {
+    LoginPage type;
+    char[] cCheck, cPassword = { 'a', 'd', 'm', 'i', 'n', '\0' };
+    JFrame f;
+    String sCheck, sCheck1 = "admin";
+
+    public button1(LoginPage type) {
+        this.type = type;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        cCheck = type.TPPassword.getPassword();
+        sCheck = type.TFUserName.getText();
+        if ((sCheck1.equals(sCheck)) && check()) {
+            SwingUtilities.invokeLater(() -> {
+                type.PLogin.add(type.LDomesticFlight1);
+                type.PLogin.add(type.LInternationalFlight1);
+
+                type.PLogin.remove(type.LUserName);
+                type.PLogin.remove(type.TFUserName);
+                type.PLogin.remove(type.LPassword);
+                type.PLogin.remove(type.TPPassword);
+                type.PLogin.remove(type.BLogin);
+
+                type.c.repaint();
+            });
+        } else {
+            SwingUtilities.invokeLater(() -> {
+                JOptionPane.showMessageDialog(null, "Invalid username or password. Try again");
+            });
+        }
+    }
+
+    public boolean check() {
+        if (cCheck.length >= 6 || cCheck.length < 4)
+            return false;
+        for (int i = 0; i <= 4; i++) {
+            if (cCheck[i] != cPassword[i])
+                return false;
+        }
+        return true;
+    }
+}
+
